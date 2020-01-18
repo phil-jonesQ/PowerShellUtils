@@ -1,6 +1,8 @@
 # Example http://www.omdbapi.com/?t=Rambo&y=2019&apikey=f174109a#
 $Base_URL="http://www.omdbapi.com/?"
-$API_Key="XXXXXXXXXXXXXXXXXX" #Redacted
+$API_Key="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+$Search_String = "Rambo"
+$Year = "2019"
 $Parameters="t=$Search_String&y=$Year&apikey=$API_KEY"
 
 Function Get-MovieInfo
@@ -16,7 +18,7 @@ Param(
 
 Set-Location "D:\Movies"
 
-$my_file_objects = Get-Childitem –Path D:\Movies -File -Recurse |  Where-Object { $_ -NotMatch ".ps1"}
+$my_file_objects = Get-Childitem –Path D:\Movies -File -Recurse |  Where-Object { $_ -NotMatch ".ps1"} |  Where-Object { $_ -NotMatch ".txt"}
 
 foreach ($search in $my_file_objects){
 
@@ -34,7 +36,17 @@ foreach ($search in $my_file_objects){
     else
     {
         #Write-Output "Writing Synopsis for $SearchStringName $SearchStringYear to $SearchStringYear\$SearchString.txt"
-        Write-Output $result | Out-File D:\Movies\$SearchStringYear\$SearchStringName.txt
+        if (Test-Path D:\Movies\$SearchStringYear\$SearchStringName.txt)
+        {
+            Remove-Item D:\Movies\$SearchStringYear\$SearchStringName.txt
+            Write-Output $result | Out-File D:\Movies\$SearchStringYear\$SearchStringName.txt
+        }
+        else
+        {
+            Write-Output $result | Out-File D:\Movies\$SearchStringYear\$SearchStringName.txt
+        }
+
+
     }
 
 }
