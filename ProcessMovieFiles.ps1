@@ -1,6 +1,6 @@
 # Example http://www.omdbapi.com/?t=Rambo&y=2019&apikey=f174109a#
 $Base_URL="http://www.omdbapi.com/?"
-$API_Key="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+$API_Key="XXXXXXXXXXXXXXXXXXXXXXXXXX"
 $Search_String = "Rambo"
 $Year = "2019"
 $Parameters="t=$Search_String&y=$Year&apikey=$API_KEY"
@@ -18,7 +18,7 @@ Param(
 
 Set-Location "D:\Movies"
 
-$my_file_objects = Get-Childitem –Path D:\Movies -File -Recurse |  Where-Object { $_ -NotMatch ".ps1"} |  Where-Object { $_ -NotMatch ".txt"}
+$my_file_objects = Get-Childitem –Path D:\Movies -File -Recurse |  Where-Object { $_ -NotMatch ".ps1"} |  Where-Object { $_ -NotMatch ".txt"} |  Where-Object { $_ -NotMatch ".jpg"} |  Where-Object { $_ -NotMatch ".png"}
 
 foreach ($search in $my_file_objects){
 
@@ -40,10 +40,12 @@ foreach ($search in $my_file_objects){
         {
             Remove-Item D:\Movies\$SearchStringYear\$SearchStringName.txt
             Write-Output $result | Out-File D:\Movies\$SearchStringYear\$SearchStringName.txt
+            Invoke-Webrequest $result.poster -OutFile D:\Movies\$SearchStringYear\$SearchStringName.jpg
         }
         else
         {
             Write-Output $result | Out-File D:\Movies\$SearchStringYear\$SearchStringName.txt
+            Invoke-Webrequest $result.poster -OutFile D:\Movies\$SearchStringYear\$SearchStringName.jpg
         }
 
 
