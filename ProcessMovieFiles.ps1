@@ -1,4 +1,3 @@
-# Example http://www.omdbapi.com/?t=Rambo&y=2019&apikey=f174109a#
 $Base_URL="http://www.omdbapi.com/?"
 $API_Key="XXXXXXXXXXXXXXXXXXXXXXXXXX"
 $Search_String = "Rambo"
